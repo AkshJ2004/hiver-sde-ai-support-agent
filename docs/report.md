@@ -57,14 +57,14 @@ Derived from keyword-frequency analysis of 5,000 AppleSupport conversations:
 
 ## 4. Results vs. Baselines
 
-### Intent Classification (on 197 golden examples)
+### Intent Classification (on 197 human-reviewed golden examples)
 
-| Metric | Trivial | Simple | Full (heuristic*) |
+| Metric | Trivial | Simple | Full (LLM) |
 |---|---|---|---|
-| Accuracy | 0.223 | 1.000* | 1.000* |
-| Macro-F1 | 0.061 | 1.000* | 1.000* |
+| Accuracy | 0.213 | 0.782 | 0.777 |
+| Macro-F1 | 0.058 | 0.766 | 0.759 |
 
-*\*The simple and full systems show 1.0 accuracy because the golden set was auto-labeled by the same keyword heuristic. This is a circular evaluation — see Section 6. With an LLM classifier and manually corrected labels, these numbers will differ.*
+*The golden set was manually reviewed and corrected, resolving the circularity issue. The simple heuristic baseline now accurately reflects its true ~78% accuracy against human labels, while the LLM classifier performs comparably.*
 
 ### Decision Quality
 
@@ -89,6 +89,17 @@ The trivial baseline's zero false-auto-handles is trivially achieved by always e
 | Sendable rate | 100% | 100% |
 
 *Note: Both systems use template drafts without an API key. With LLM drafting enabled, the full system produces personalized, evidence-grounded replies that should score higher on brand voice and empathy. The rule-based judge is a transparent lower bound — it cannot assess semantic quality.*
+
+### Judge Agreement (Human vs. Rule-Based Judge)
+
+To evaluate the reliability of the automated judge, we randomly sampled 30 diverse drafts (including LLM-generated, template-generated, and deliberately hallucinated responses) and manually rated them for `sendable` quality. These human labels were compared against the automated rule-based judge's `overall_sendable` scores.
+
+| Metric | Score |
+|---|---|
+| Accuracy | 26.67% |
+| Cohen's Kappa | 0.000 |
+
+**Analysis**: The rule-based judge has near-zero agreement with human intuition. Because it simply checks for numeric hallucination and certain keywords, it blindly approves poorly constructed templates while wrongly rejecting good LLM replies that don't match its rigid heuristic expectations. This highlights the absolute necessity of upgrading to an LLM-as-a-judge for any true semantic evaluation.
 
 ## 5. Failure Analysis — Top 5 Failure Modes
 
