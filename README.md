@@ -1,12 +1,15 @@
 # AppleSupport AI Copilot
 
-A conservative, reproducible triage-and-draft copilot for AppleSupport Twitter
-conversations. It classifies customer messages into six intents, retrieves
-historically similar resolutions, drafts grounded replies, and decides whether
-to auto-handle or escalate — with a stated reason for every decision.
+This project is an AI-powered assistant designed to help customer support teams (specifically for Apple Support on Twitter) handle customer messages more effectively.
 
-This is a **copilot**: `auto_handle` means *eligible for human review and sending*,
-not that any message is sent autonomously.
+In simple terms, here is what the system does:
+1. **Reads the Message:** It looks at what the customer is asking.
+2. **Categorizes the Issue:** It figures out the main topic of the problem (like battery issues, software updates, etc.).
+3. **Finds Past Solutions:** It searches for how similar problems were solved in the past.
+4. **Drafts a Reply:** It writes a suggested response based on those past solutions.
+5. **Makes a Decision:** It decides if the drafted reply is good enough to be sent to the customer (after a human checks it) or if the issue is too complex and needs to be escalated to a human expert.
+
+This tool acts as an assistant or "copilot." It does not send messages automatically; it simply prepares the best possible draft so the support team can review and send it faster.
 
 ## Reproduce in under 15 minutes
 

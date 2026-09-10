@@ -5,3 +5,6 @@ __pycache__/
 .env
 .pytest_cache/
 *.pyc
+
+docs/
+handoff.md
