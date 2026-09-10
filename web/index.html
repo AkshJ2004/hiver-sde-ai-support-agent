@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AppleSupport AI Copilot Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app-background"></div>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    
+    <!-- Top Navigation / Header -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.44c.64-.78 1.08-1.86.96-2.94-.93.04-2.06.62-2.73 1.4-.58.68-1.1 1.77-.96 2.83 1.04.08 2.09-.51 2.73-1.29z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>AppleSupport Copilot <span class="studio-badge">STUDIO</span></h1>
+          <p class="brand-sub">Real-Time AI Triage, Grounding, Drafting & Adaptive Escalation Policy</p>
+        </div>
+      </div>
+
+      <div class="header-status">
+        <div id="status-pill" class="status-pill checking">
+          <span class="pulse-dot"></span>
+          <span id="status-text">Connecting...</span>
+        </div>
+        <div class="kb-badge">
+          <span id="kb-count">5,000</span> pairs in KB
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace Layout -->
+    <main class="main-grid">
+      
+      <!-- Left Column: Input & Controls Deck -->
+      <section class="card control-deck">
+        <div class="card-header">
+          <h2>Customer Support Inquiry</h2>
+          <span class="step-tag">Custom Input & Policy Controls</span>
+        </div>
+
+        <!-- Text input area -->
+        <div class="form-group">
+          <label for="message-input">Customer Inquiry Message:</label>
+          <textarea
+            id="message-input"
+            rows="4"
+            placeholder="e.g. My iPhone case is broken, where can I buy a replacement? Or: My battery is draining fast after updating to iOS 11."
+          ></textarea>
+          <div class="textarea-footer">
+            <span id="char-count">0 characters</span>
+            <button id="clear-btn" class="btn-text">Clear</button>
+          </div>
+        </div>
+
+        <!-- Quick Test Scenarios -->
+        <div class="form-group quick-scenarios-group">
+          <span class="scenarios-label">Quick Test Scenarios:</span>
+          <div class="chips-grid">
+            <button type="button" class="scenario-chip" data-text="My iPhone case is broken and cracked, where can I buy a replacement in the Apple Store?">📱 Broken Case (Routine)</button>
+            <button type="button" class="scenario-chip" data-text="My iPhone battery drains 40% in two hours after updating to the latest iOS.">🔋 Battery Drain (Technical)</button>
+            <button type="button" class="scenario-chip" data-text="My Wi-Fi keeps disconnecting every few minutes on my iPad.">📶 Wi-Fi Issue (Connectivity)</button>
+            <button type="button" class="scenario-chip" data-text="My Apple ID is locked and I forgot my password. Please help unlock it!">🔒 Apple ID Locked (Security)</button>
+            <button type="button" class="scenario-chip" data-text="This is ridiculous and unacceptable! Fix my phone now or I will contact my lawyer!">😠 Frustrated Tone (Escalate)</button>
+          </div>
+        </div>
+
+        <!-- Provider and settings -->
+        <div class="settings-panel">
+          <div class="form-group">
+            <label>Inference Provider:</label>
+            <div class="provider-radio-group">
+              <label class="radio-card active" id="label-gemini">
+                <input type="radio" name="provider" value="gemini" checked />
+                <span class="radio-content">
+                  <strong>Gemini 3.6 Flash</strong>
+                  <small>Few-shot LLM + RAG Grounding</small>
+                </span>
+              </label>
+
+              <label class="radio-card" id="label-heuristic">
+                <input type="radio" name="provider" value="heuristic" />
+                <span class="radio-content">
+                  <strong>Keyword Heuristic</strong>
+                  <small>Deterministic fast baseline</small>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Situational Adaptive Threshold Control -->
+          <div class="form-group threshold-setting-group">
+            <div class="adaptive-threshold-card">
+              <div class="threshold-header-row">
+                <div class="threshold-label-block">
+                  <div class="title-with-pill">
+                    <span class="status-pulse-dot"></span>
+                    <strong>Situational Adaptive Threshold</strong>
+                    <span class="adaptive-pill" id="adaptive-mode-badge">AUTO-CALIBRATED</span>
+                  </div>
+                  <p class="threshold-caption" id="threshold-caption">
+                    Automatically sets confidence safety margins based on inquiry risk (55% routine accessories, 68% tech issues, 85% sensitive security).
+                  </p>
+                </div>
+              </div>
+
+              <div class="override-row">
+                <label class="toggle-container">
+                  <input type="checkbox" id="manual-override-toggle" />
+                  <span class="toggle-switch-slider"></span>
+                  <span class="toggle-label-text">Enable manual threshold override</span>
+                </label>
+              </div>
+
+              <div id="manual-slider-container" class="manual-slider-container hidden">
+                <div class="slider-header">
+                  <label for="threshold-slider">Fixed Manual Threshold:</label>
+                  <span id="threshold-val" class="slider-val">72%</span>
+                </div>
+                <input
+                  type="range"
+                  id="threshold-slider"
+                  min="50"
+                  max="95"
+                  value="72"
+                  step="1"
+                />
+                <small class="hint">Fixed threshold override for all incoming inquiries.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary Action CTA -->
+        <button id="analyze-btn" class="btn-primary">
+          <span class="btn-icon">⚡</span>
+          <span class="btn-label">Run Copilot Analysis</span>
+          <span class="spinner" id="analyze-spinner"></span>
+        </button>
+      </section>
+
+      <!-- Right Column: Live Results Deck -->
+      <section class="card results-deck">
+        <div class="card-header">
+          <h2>Copilot Decision & Output</h2>
+          <span class="step-tag" id="provider-badge">Awaiting Analysis</span>
+        </div>
+
+        <!-- Empty State Placeholder -->
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon">🍎</div>
+          <h3>No Analysis Yet</h3>
+          <p>Type a customer inquiry on the left (or pick a quick test scenario chip), then click <strong>Run Copilot Analysis</strong>.</p>
+        </div>
+
+        <!-- Active Analysis View -->
+        <div id="results-content" class="results-content hidden">
+
+          <!-- 3 Hero Metric Cards -->
+          <div class="hero-cards-grid">
+            
+            <!-- Card 1: Decision Gate -->
+            <div class="metric-card decision-card" id="decision-card">
+              <span class="card-kicker">SAFETY POLICY GATE</span>
+              <div class="decision-pill" id="decision-pill">ELIGIBLE FOR REVIEW</div>
+              <h3 id="decision-title">Auto Handle</h3>
+              <p class="decision-reason" id="decision-reason">High-confidence, non-sensitive, verifiable draft</p>
+            </div>
+
+            <!-- Card 2: Intent Classification -->
+            <div class="metric-card intent-card">
+              <span class="card-kicker">CLASSIFIED INTENT</span>
+              <div class="intent-title" id="intent-title">Battery or Power</div>
+              <div class="confidence-bar-container">
+                <div class="confidence-bar" id="confidence-bar" style="width: 88%;"></div>
+              </div>
+              <div class="confidence-meta">
+                <span>Confidence: <strong id="confidence-val">88%</strong></span>
+                <span>Threshold: <strong id="meta-threshold">55% (Auto)</strong></span>
+              </div>
+              <div class="situational-risk-badge" id="situational-risk-badge">
+                <span class="risk-pill-icon">🛡️</span>
+                <span id="situational-risk-text">Low Risk (Routine Inquiry)</span>
+              </div>
+            </div>
+
+            <!-- Card 3: Draft Reply Preview -->
+            <div class="metric-card draft-card">
+              <div class="draft-header">
+                <span class="card-kicker">GROUNDED DRAFT REPLY</span>
+                <button id="copy-draft-btn" class="btn-icon-text" title="Copy to clipboard">
+                  📋 Copy
+                </button>
+              </div>
+              <div class="message-bubble" id="draft-reply-text">
+                "Hi there, we'd like to help you with that. Please contact our official support team..."
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Section: Judge Reply Quality Rubric -->
+          <div class="rubric-section">
+            <div class="section-title-bar">
+              <h4>Reply Quality Rubric (LLM-as-Judge)</h4>
+              <span id="judge-type-pill" class="judge-type-pill">Rule-Based Judge</span>
+            </div>
+            
+            <div class="rubric-grid">
+              <div class="rubric-item">
+                <div class="rubric-label"><span>Groundedness</span><strong id="score-groundedness">4/5</strong></div>
+                <div class="rubric-meter"><div class="meter-fill" id="meter-groundedness" style="width: 80%;"></div></div>
+              </div>
+              <div class="rubric-item">
+                <div class="rubric-label"><span>Brand Voice</span><strong id="score-brand-voice">4/5</strong></div>
+                <div class="rubric-meter"><div class="meter-fill" id="meter-brand-voice" style="width: 80%;"></div></div>
+              </div>
+              <div class="rubric-item">
+                <div class="rubric-label"><span>Actionability</span><strong id="score-actionability">4/5</strong></div>
+                <div class="rubric-meter"><div class="meter-fill" id="meter-actionability" style="width: 80%;"></div></div>
+              </div>
+              <div class="rubric-item">
+                <div class="rubric-label"><span>Empathy</span><strong id="score-empathy">3/5</strong></div>
+                <div class="rubric-meter"><div class="meter-fill" id="meter-empathy" style="width: 60%;"></div></div>
+              </div>
+              <div class="rubric-item">
+                <div class="rubric-label"><span>Safety</span><strong id="score-safety">5/5</strong></div>
+                <div class="rubric-meter"><div class="meter-fill" id="meter-safety" style="width: 100%;"></div></div>
+              </div>
+              <div class="rubric-item sendable-box">
+                <span class="sendable-title">Overall Sendable</span>
+                <span id="sendable-badge" class="sendable-badge pass">YES</span>
+              </div>
+            </div>
+            <p id="judge-rationale" class="judge-rationale"></p>
+          </div>
+
+          <!-- Section: Historical Grounding Evidence -->
+          <div class="evidence-section">
+            <h4>Verified Historical Grounding Evidence</h4>
+            <p class="section-sub">Similar resolutions retrieved from verified official support benchmarks:</p>
+            <div class="evidence-list" id="evidence-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Section: Raw JSON Debugger -->
+          <details class="debug-details">
+            <summary>Inspect Raw Pipeline JSON Response</summary>
+            <pre><code id="json-debug"></code></pre>
+          </details>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>AppleSupport AI Copilot · Powered by Google Gemini 3.6 Flash · PII Scrubbed · Human-in-the-Loop Safe</p>
+    </footer>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
